@@ -4,12 +4,11 @@ import labs.db_lab_6.dto.ResponseDto;
 import labs.db_lab_6.entity.Response;
 import labs.db_lab_6.service.response.ResponseService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1")
 public class ResponseController {
 
