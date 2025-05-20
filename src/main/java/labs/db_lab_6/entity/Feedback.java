@@ -23,9 +23,8 @@ public class Feedback {
     @JsonIgnore
     private Response response;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "title")
     private String title;
