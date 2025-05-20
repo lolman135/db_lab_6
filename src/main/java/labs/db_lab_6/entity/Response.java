@@ -28,9 +28,9 @@ public class Response {
     @Column(name = "user_id")
     private Long userId;
 
-    @OneToMany(mappedBy = "response")
+    @OneToMany(mappedBy = "response", orphanRemoval = true)
     private List<Dataset> datasets;
 
-    @OneToMany(mappedBy = "response")
+    @OneToMany(mappedBy = "response", orphanRemoval = true)
     private List<Feedback> feedbacks;
 }

@@ -1,9 +1,10 @@
 package labs.db_lab_6.dto;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record ResponseDto(
-        Long id,
         String description,
         String graphic,
         Long userId,

@@ -8,9 +8,10 @@ public class FeedbackMapper {
 
     public static Feedback toEntity(FeedbackDto dto, ResponseRepository repository){
         Feedback feedback = new Feedback();
+        if (dto.responseId() != null) {
+            feedback.setResponse(repository.findById(dto.responseId()).orElse(null));
+        }
 
-        feedback.setId(dto.id());
-        feedback.setResponse(repository.findById(dto.responseId()).orElse(null));
         feedback.setUserId(dto.userId());
         feedback.setTitle(dto.title());
         feedback.setComment(dto.comment());
