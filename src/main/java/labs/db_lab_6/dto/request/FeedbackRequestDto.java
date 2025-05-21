@@ -1,9 +1,9 @@
-package labs.db_lab_6.dto;
+package labs.db_lab_6.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record FeedbackDto(
+public record FeedbackRequestDto(
         Long responseId,
         Long userId,
         String title,

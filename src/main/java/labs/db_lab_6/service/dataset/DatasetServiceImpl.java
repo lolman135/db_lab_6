@@ -1,12 +1,10 @@
 package labs.db_lab_6.service.dataset;
 
-import labs.db_lab_6.dto.DatasetDto;
-import labs.db_lab_6.dto.ResponseDto;
+import labs.db_lab_6.dto.request.DatasetRequestDto;
+import labs.db_lab_6.dto.response.DatasetResponseDto;
 import labs.db_lab_6.entity.Dataset;
-import labs.db_lab_6.entity.Response;
 import labs.db_lab_6.exception.ResourceNotFoundException;
 import labs.db_lab_6.mapper.DatasetMapper;
-import labs.db_lab_6.mapper.ResponseMapper;
 import labs.db_lab_6.repository.DatasetRepository;
 import labs.db_lab_6.repository.ResponseRepository;
 import org.springframework.stereotype.Service;
@@ -25,30 +23,31 @@ public class DatasetServiceImpl implements DatasetService {
     }
 
     @Override
-    public List<Dataset> findAll() {
-        return datasetRepository.findAll();
+    public List<DatasetResponseDto> findAll() {
+        return datasetRepository.findAll().stream()
+                .map(DatasetMapper::toDto).toList();
     }
 
     @Override
-    public Dataset findById(Long id) {
+    public DatasetResponseDto findById(Long id) {
         if (id == null){
             throw new IllegalArgumentException("Wrong id provided");
         }
-        return datasetRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No resource with id:" + id));
+        return DatasetMapper.toDto(datasetRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No resource with id:" + id)));
     }
 
     @Override
-    public Dataset save(DatasetDto dto) {
+    public DatasetResponseDto save(DatasetRequestDto dto) {
         if (dto == null){
             throw new IllegalArgumentException("Wrong data provided");
         }
         Dataset dataset = DatasetMapper.toEntity(dto, responseRepository);
-        return datasetRepository.save(dataset);
+        return DatasetMapper.toDto(datasetRepository.save(dataset));
     }
 
     @Override
-    public Dataset updateById(DatasetDto dto, Long id) {
+    public DatasetResponseDto updateById(DatasetRequestDto dto, Long id) {
         if (id == null || dto == null){
             throw new IllegalArgumentException("Wrong data provided");
         }
@@ -56,7 +55,7 @@ public class DatasetServiceImpl implements DatasetService {
         if (datasetRepository.existsById(id)){
             Dataset dataset = DatasetMapper.toEntity(dto, responseRepository);
             dataset.setId(id);
-            return datasetRepository.save(dataset);
+            return DatasetMapper.toDto(datasetRepository.save(dataset));
         }
         return null;
     }

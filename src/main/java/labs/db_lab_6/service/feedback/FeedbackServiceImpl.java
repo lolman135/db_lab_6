@@ -1,11 +1,9 @@
 package labs.db_lab_6.service.feedback;
 
-import labs.db_lab_6.dto.DatasetDto;
-import labs.db_lab_6.dto.FeedbackDto;
-import labs.db_lab_6.entity.Dataset;
+import labs.db_lab_6.dto.request.FeedbackRequestDto;
+import labs.db_lab_6.dto.response.FeedbackResponseDto;
 import labs.db_lab_6.entity.Feedback;
 import labs.db_lab_6.exception.ResourceNotFoundException;
-import labs.db_lab_6.mapper.DatasetMapper;
 import labs.db_lab_6.mapper.FeedbackMapper;
 import labs.db_lab_6.repository.FeedbackRepository;
 import labs.db_lab_6.repository.ResponseRepository;
@@ -25,30 +23,32 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<Feedback> findAll() {
-        return feedbackRepository.findAll();
+    public List<FeedbackResponseDto> findAll() {
+        return feedbackRepository.findAll().stream()
+                .map(FeedbackMapper::toDto).toList();
     }
 
     @Override
-    public Feedback findById(Long id) {
+    public FeedbackResponseDto findById(Long id) {
         if (id == null){
             throw new IllegalArgumentException("Wrong id provided");
         }
-        return feedbackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No resource with id:" + id));
+
+        return FeedbackMapper.toDto(feedbackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No resource with id:" + id)));
     }
 
     @Override
-    public Feedback save(FeedbackDto dto) {
+    public FeedbackResponseDto save(FeedbackRequestDto dto) {
         if (dto == null){
             throw new IllegalArgumentException("Wrong data provided");
         }
         Feedback feedback = FeedbackMapper.toEntity(dto, responseRepository);
-        return feedbackRepository.save(feedback);
+        return FeedbackMapper.toDto(feedbackRepository.save(feedback));
     }
 
     @Override
-    public Feedback updateById(FeedbackDto dto, Long id) {
+    public FeedbackResponseDto updateById(FeedbackRequestDto dto, Long id) {
         if (id == null || dto == null){
             throw new IllegalArgumentException("Wrong data provided");
         }
@@ -56,7 +56,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (feedbackRepository.existsById(id)){
             Feedback feedback = FeedbackMapper.toEntity(dto, responseRepository);
             feedback.setId(id);
-            return feedbackRepository.save(feedback);
+            return FeedbackMapper.toDto(feedbackRepository.save(feedback));
         }
         return null;
     }

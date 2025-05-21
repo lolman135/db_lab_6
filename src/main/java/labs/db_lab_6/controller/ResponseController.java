@@ -1,6 +1,6 @@
 package labs.db_lab_6.controller;
 
-import labs.db_lab_6.dto.ResponseDto;
+import labs.db_lab_6.dto.request.ResponseDto;
 import labs.db_lab_6.entity.Response;
 import labs.db_lab_6.service.response.ResponseService;
 import org.springframework.http.ResponseEntity;

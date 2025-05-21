@@ -1,4 +1,4 @@
-package labs.db_lab_6.dto;
+package labs.db_lab_6.dto.request;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

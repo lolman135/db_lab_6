@@ -1,7 +1,7 @@
 package labs.db_lab_6.controller;
 
-import labs.db_lab_6.dto.FeedbackDto;
-import labs.db_lab_6.entity.Feedback;
+import labs.db_lab_6.dto.request.FeedbackRequestDto;
+import labs.db_lab_6.dto.response.FeedbackResponseDto;
 import labs.db_lab_6.service.feedback.FeedbackService;
 import org.springframework.http.ResponseEntity;
 
@@ -20,26 +20,26 @@ public class FeedbackController {
     }
 
     @GetMapping("/feedbacks")
-    public ResponseEntity<List<Feedback>> findAll(){
-        List<Feedback> feedbacks = feedbackService.findAll();
+    public ResponseEntity<List<FeedbackResponseDto>> findAll(){
+        List<FeedbackResponseDto> feedbacks = feedbackService.findAll();
         return ResponseEntity.ok(feedbacks);
     }
 
     @GetMapping("/feedbacks/{id}")
-    public ResponseEntity<Feedback> findById(@PathVariable("id") Long id){
-        Feedback feedback = feedbackService.findById(id);
+    public ResponseEntity<FeedbackResponseDto> findById(@PathVariable("id") Long id){
+        FeedbackResponseDto feedback = feedbackService.findById(id);
         return ResponseEntity.ok(feedback);
     }
 
     @PostMapping("/feedbacks")
-    public ResponseEntity<Feedback> save(@RequestBody FeedbackDto dto){
-        Feedback feedback = feedbackService.save(dto);
+    public ResponseEntity<FeedbackResponseDto> save(@RequestBody FeedbackRequestDto dto){
+        FeedbackResponseDto feedback = feedbackService.save(dto);
         return ResponseEntity.ok(feedback);
     }
 
     @PutMapping("/feedbacks/{id}")
-    public ResponseEntity<Feedback> updateById(@PathVariable("id") Long id, @RequestBody FeedbackDto dto){
-        Feedback feedback = feedbackService.updateById(dto, id);
+    public ResponseEntity<FeedbackResponseDto> updateById(@PathVariable("id") Long id, @RequestBody FeedbackRequestDto dto){
+        FeedbackResponseDto feedback = feedbackService.updateById(dto, id);
         return ResponseEntity.ok(feedback);
     }
 
